@@ -26,7 +26,7 @@ Vivienda - ENAHO:
 | UBIGEO       | Cualitativa nominal   | Código de Ubicación Geográfica del INEI  |
 | VIVIENDA    | Cualitativa nominal    | Número de selección de la vivienda   |
 | AguaAcceso    | Cualitativa nominal (1-2)  | ¿La vivienda tiene acceso a agua todos los días de la semana?: 1.- Sí / 2.- No|
-| Electricidad    | Cualitativa nominal (1-2)  | Alumbrado de electricidad en el hogar: 0. No / 1.. Sí   |
+| Electricidad    | Cualitativa nominal (1-2)  | Alumbrado de electricidad en el hogar: 0. No / 1. Sí   |
 
 ---
 
@@ -36,6 +36,6 @@ Educación - ENAHO:
 | UBIGEO       | Cualitativa nominal   | Código de Ubicación Geográfica del INEI  |
 | VIVIENDA    | Cualitativa nominal    | Número de selección de la vivienda   |
 | Estatal       | Cualitativa nominal (1-2)   |¿Cuál es el grado o año de estudios en el que está matriculado? -  Centro de Estudios: 1. Estatal / 2. No Estatal |
-| EquipoEdu    | Cualitativa ordinal (1-4)    | ¿El servicio educativo que brinda el centro de eseñanza donde asiste actualmente en relación a: Equipamiento es?: 1.  Muy malo / 2.  Malo / 3.  Bueno / 4.  Muy bueno  |
-| CalidadEdu       | Cualitativa ordinal (1-4)   | ¿El servicio educativo que brinda el centro de eseñanza donde asiste actualmente en relación a: Enseñanza de los maestros es?:  1.  Muy malo / 2.  Malo / 3.  Bueno / 4.  Muy bueno |
+| EquipoEdu    | Cualitativa ordinal (1-5)    | ¿El servicio educativo que brinda el centro de eseñanza donde asiste actualmente en relación a: Equipamiento es?: 1.  Muy malo / 2.  Malo / 3.  Bueno / 4.  Muy bueno / 5. No sabe |
+| CalidadEdu       | Cualitativa ordinal (1-5)   | ¿El servicio educativo que brinda el centro de eseñanza donde asiste actualmente en relación a: Enseñanza de los maestros es?:  1.  Muy malo / 2.  Malo / 3.  Bueno / 4.  Muy bueno / 5. No sabe|
 | Edad    | Numérica discreta (6-17) | Edad cumplida en años               |
