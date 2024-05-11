@@ -1,0 +1,69 @@
+#importar datas
+```{r}
+library(rio)
+enaho_vivienda = import("enaho_carac_vivienda.csv")
+```
+
+```{r}
+str(enaho_vivienda$P110C) #Tiene acceso a agua todos los días 1 - Sí / 2 - No / 9 - NAs
+```
+```{r}
+table(enaho_vivienda$P110C)
+```
+```{r}
+vivienda = select(enaho_vivienda, UBIGEO, VIVIENDA, P110C, P1121)
+```
+
+```{r}
+vivienda <- vivienda[complete.cases(vivienda), ]
+```
+
+```{r}
+vivienda <- vivienda %>%
+  rename(AguaAcceso= P110C)
+```
+
+```{r}
+vivienda <- vivienda %>%
+  rename(Electricidad= P1121)
+```
+
+#Enaho edu
+
+```{r}
+enahoedu = import("enaho_edu.csv")
+```
+```{r}
+educacion = select(enahoedu, UBIGEO, VIVIENDA, P308D, P308B2, P308B3, P208A)
+#P308D -> ESTATAL O NO ESTATAL
+#P308B2 -> Calidad equipamiento
+#P308B3 -> CALIDAD ENSEÑANZA
+#P208A -> EDAD
+```
+
+```{r}
+educacion <- educacion[complete.cases(educacion), ]
+```
+
+```{r}
+str(educacion)
+```
+```{r}
+educacion <- educacion[educacion$P208A >= 6 & educacion$P208A <= 17, ]
+```
+
+```{r}
+educacion <- educacion %>%
+  rename(Estatal= P308D, EquipoEdu= P308B2, CalidadEdu= P308B3, Edad= P208A)
+```
+
+#Exportar datas
+```{r}
+library(rio)
+export(educacion, "educacion_data.csv") 
+```
+
+```{r}
+export(vivienda, "vivienda_data.csv") 
+```
+

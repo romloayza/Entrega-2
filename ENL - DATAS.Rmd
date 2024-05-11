@@ -1,0 +1,246 @@
+---
+title: "DATA - TRABAJO FINAL"
+author: "Yhara y Romina"
+date: "2024-05-06"
+output: html_document
+---
+
+# Data 1
+
+```{r}
+library(rio)
+data= import("Capítulo 100_600 Caracteristicas y Servicios del Hogar.csv")
+```
+
+```{r}
+str(data)
+```
+
+# Data 2
+
+```{r}
+library(rio)
+data2= import("Capítulo 500-Prácticas Lectoras edad 0-17.csv")
+```
+
+
+
+#Varible dependiente: 
+0- 17 años (quien responde?)
+
+Práctica lectora de la población entre 6 y 17 años de edad en el Perú
+
+```{r}
+str(data2$P506)
+```
+```{r}
+table(data2$P506)
+```
+
+
+#Variables independientes:
+
+
+##Idioma: EL IDIOMA O LENGUA MATERNA CON LA QUE APRENDIÓ A HABLAR EN SU NIÑEZ
+ 
+1. Quechua?
+2. Aimara?
+3. Ashaninka?
+4. Awajun / Aguaruna?
+5. Shipibo-Konibo?
+6. Shawi / Chayahuita?
+7. Matsigenka/Machiguenga?
+8. Achuar?
+9. Otra lengua indígena u originaria?
+10. Castellano?
+11.Portugués?
+12. Inglés?
+13.Otra lengua extranjera?
+14. NO ESCUCHA/NI HABLA
+15. LENGUA DE SEÑAS PERUANAS
+
+```{r}
+str(data2$P513A)
+```
+```{r}
+table(data2$P513A)
+```
+
+```{r}
+data2$P513A=as.factor(data2$P513A)
+class(data2$P513A)
+```
+
+
+----------
+# si tiene connexion a internet (cableado o en su casa)
+
+
+```{r}
+table(data$P602_10)
+str(data$P602_10)
+```
+```{r}
+data$P602_10= as.factor(data$P602_10)
+str(data$P602_10)
+```
+
+
+
+# si tiene un celular con conexión a internet 
+
+
+```{r}
+table(data$P602_7)
+str(data$P602_7)
+```
+
+```{r}
+data$P602_7=as.factor(data$P602_7)
+str(data$P602_7)
+```
+
+
+
+
+# Numero de personas que viven en el hogar
+
+```{r}
+str(data2$PERS_NRO)
+```
+```{r}
+summary(data2$PERS_NRO)
+```
+
+
+# Bibliotecas:
+
+1. Falta de tiempo?
+2. No hay biblioteca escolar en la institución educativa?
+3. La biblioteca escolar en la IE no está funcionando?
+4. No le gusta leer/falta de interés?
+5 Otro?
+
+```{r}
+table(data2$P517)
+```
+
+data2=data2[complete.cases(data2),]
+
+```{r}
+library(dplyr)
+library(dplyr)
+library(stats)
+library(base)
+
+data2 <- data2 %>%
+  mutate(BIBLIOTECA = ifelse(P517 == 1 | P517 == 4 | P517 == 5, "Sí", "No"))
+```
+
+
+```{r}
+table(data2$BIBLIOTECA)
+```
+
+
+```{r}
+table(data2$P504_A)
+```
+
+
+
+# UBIGEO --> cap 500
+
+```{r}
+str(data2$P504_A)
+```
+```{r}
+table(data2$P504_A)
+```
+
+
+# matriculado
+
+1. Inicial
+2. Primaria
+3. Secundaria
+4. Básica especial
+5. Superior no universitaria
+6. Superior universitaria
+7. NS/NR
+8. NO ESTÁ ASISTIENDO
+
+```{r}
+table(data2$P514_1)
+```
+
+```{r}
+library(dplyr)
+# Suponiendo que la variable se llama "nivel_educativo" en tu dataframe "data"
+
+# Crear una nueva variable dicotómica
+data2$P514_1 <- ifelse(data2$P514_1 %in% c("7", "8"), "No", "Sí")
+
+```
+
+
+```{r}
+table(data2$P514_1)
+```
+
+
+
+### LECTURA 1
+
+
+```{r}
+lectura1 = data2 %>%
+  select(P504_A, UBIGEO, BIBLIOTECA, P506, P513A, PERS_NRO, ESTRATOSOCIO, P514_1) %>%
+  group_by(P504_A) %>%
+  filter(P504_A >= 6)
+```
+
+```{r}
+library(dplyr)
+
+lectura1 <- lectura1 %>%
+  rename(EDAD = P504_A) 
+```
+
+```{r}
+lectura1 <- lectura1 %>%
+  rename(IDIOMA= P513A) %>%
+  rename(PRACTICA_LECTURA = P506) 
+```
+
+```{r}
+lectura1 <- lectura1 %>%
+  rename(MATRICULADO= P514_1)
+```
+
+```{r}
+lectura1=lectura1[complete.cases(lectura1),]
+```
+
+
+
+### LECTURA 2
+
+```{r}
+lectura2 = data %>%
+  select(UBIGEO, P602_10, P602_7) %>%
+  group_by(UBIGEO)
+```
+
+```{r}
+lectura2 <- lectura2 %>%
+  rename(INTERNET= P602_10) %>%
+  rename(INTERNET_CELULAR = P602_7)
+```
+
+#exportar bases
+```{r}
+export(lectura1, "practica_lectora.csv") 
+export(lectura2, "internet_data.csv") 
+```
+
